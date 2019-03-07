@@ -1,0 +1,162 @@
+{namespace com.itg.plugin.confluence}
+/**
+ *  Job Request Properties
+*/
+{template .jobRequestProperties}
+	<form action="#" id="jobRequestProperties" method="post" class="aui">
+      	{call .labelInputPair}
+      		{param strName}varProject{/param}
+      		{param strId}varProject{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varProject.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varProject.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varTerritory{/param}
+      		{param strId}varTerritory{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varTerritory.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varTerritory.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varTechLead{/param}
+      		{param strId}varTechLead{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varTechLead.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varTechLead.required')}{/param}
+      	{/call}
+	</form>
+{/template}
+/**
+*	Job Request Properties2
+*/
+{template .jobRequestProperties2}
+	<form action="#" id="jobRequestProperties" method="post" class="aui">
+      	{call .labelInputPair}
+      		{param strName}varImplementationDate{/param}
+      		{param strId}varImplementationDate{/param}
+            {param type}date{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varImplementationDate.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varImplementationDate.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varRemovalDate{/param}
+      		{param strId}varRemovalDate{/param}
+            {param type}date{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varRemovalDate.label')}{/param}
+      		{param strHelpText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varRemovalDate.helptext')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varServerDetails{/param}
+      		{param strId}varServerDetails{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varServerDetails.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varServerDetails.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varNotificationEmail{/param}
+      		{param strId}varNotificationEmail{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varNotificationEmail.label')}{/param}
+      		{param strHelpText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varNotificationEmail.helptext')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varSupportDocuments{/param}
+      		{param strId}varSupportDocuments{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varSupportDocuments.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varSupportDocuments.required')}{/param}
+      	{/call}
+	</form>
+{/template}
+/**
+*	Description
+**/
+{template .jobRequestDescription}
+	{call .wikiForm}
+  		{param strName}wikiDescriptionSummary{/param}
+  		{param strId}wiki-markup-DescriptionSummary{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestDescription.form.wiki-markup-DescriptionSummary.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestDescription.form.wiki-markup-DescriptionSummary.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Dependencies
+**/
+{template .jobRequestDependencies}
+	{call .wikiForm}
+  		{param strName}wikiDependencies{/param}
+  		{param strId}wiki-markup-Dependencies{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestDependencies.form.wiki-markup-Dependencies.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestDependencies.form.wiki-markup-Dependencies.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Job Steps
+**/
+{template .jobRequestJobSteps}
+    {call .labelInputPair}
+        {param strName}varJobName{/param}
+        {param strId}varJobName{/param}
+        {param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varJobName.label')}{/param}
+        {param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varJobName.required')}{/param}
+      	{param strHelpText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varJobName.helptext')}{/param}
+    {/call}
+    <p>Add the step details for this job below</p>
+    <div>
+        <table id="job-steps" name="job-steps" class="aui"></table>
+    </div>
+
+{/template}
+/**
+*	Monitoring
+**/
+{template .jobRequestMonitoring}
+	{call .wikiForm}
+  		{param strName}wikiMonitoring{/param}
+  		{param strId}wiki-markup-Monitoring{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestMonitoring.form.wiki-markup-Monitoring.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestMonitoring.form.wiki-markup-Monitoring.helptext')}{/param}
+  	{/call}
+{/template}
+/**
+*	On Failure Actions
+**/
+{template .jobRequestOnFailure}
+	{call .wikiForm}
+  		{param strName}wikiOnFailure{/param}
+  		{param strId}wiki-markup-OnFailure{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestOnFailure.form.wiki-markup-OnFailure.label')}{/param}
+      	{param strHelpText}{getText('com.itg.plugin.confluence.jobRequestOnFailure.form.wiki-markup-OnFailure.helptext')}{/param}
+  	{/call}
+{/template}
+/**
+*	Segment Info
+**/
+{template .jobRequestSegmentInfo}
+    <p>Does the job ultimately push data into a segment on a Lyris server?
+        <ul>
+            <li>No (skip to next section)</li>
+            <li>Yes (You must provide the information requested below)</li>
+        </ul>
+    </p>
+    <div>
+        <table id="segment-info" name="segment-info" class="aui"></table>
+    </div>
+{/template}
+/**
+*	Pre-pops
+**/
+{template .jobRequestPrepops}
+    <p>Is Job a pre-pop process triggered by UNICA?
+        <ul>
+            <li>No (skip to next section)</li>
+            <li>Yes (Please confirm that that you have included the Post Blind Push Lyris Automated Schedule code within the pre-pop)</li>
+        </ul>
+    </p>
+{/template}
+/**
+*	Purpose
+**/
+{template .jobRequestPurpose}
+	{call .wikiForm}
+  		{param strName}wikiPurpose{/param}
+  		{param strId}wiki-markup-Purpose{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.jobRequestPurpose.form.wiki-markup-Purpose.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestPurpose.form.wiki-markup-Purpose.required')}{/param}
+  	{/call}
+{/template}

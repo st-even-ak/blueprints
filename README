@@ -1,0 +1,12 @@
+ITG Document Plugins
+
+This project creates a confluence plugin that guides user through the document creation process.
+
+Currently it includes templates for:
+- Briefs
+- Change requests
+- Release notes
+
+Next Steps:
+- Add Db connectivity so the Soy templates in the wizard can be dynamically driven
+- Add configuration page(s) so Conf admins can manage the plugins with requiring rebuilds

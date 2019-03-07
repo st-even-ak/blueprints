@@ -1,0 +1,114 @@
+{namespace com.itg.plugin.confluence}
+/**
+ * Test Plan
+*/
+{template .testPlanProperties}
+	<form action="#" id="testPlanProperties" method="post" class="aui">
+      	{call .labelInputPair}
+      		{param strName}varTitle{/param}
+      		{param strId}varTitle{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteTitle.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteTitle.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varProposer{/param}
+      		{param strId}varProposer{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteProposer.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteProposer.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varAuthoriser{/param}
+      		{param strId}varAuthoriser{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteAuthoriser.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteAuthoriser.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}macro-jira{/param}
+      		{param strId}varJIRA{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteJira.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteJira.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varServerDetails{/param}
+      		{param strId}varServerDetails{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteServerDetails.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.testPlanProperties.form.varReleaseNoteServerDetails.required')}{/param}
+      	{/call}
+	</form>
+{/template}
+/**
+*	Summary
+*/
+{template .testPlanSummary}
+	{call .wikiForm}
+  		{param strName}wikiReleaseNoteSummary{/param}
+  		{param strId}wiki-markup-testPlanSummary{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.testPlanSummary.form.wiki-markup-testPlanSummary.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.testPlanSummary.form.wiki-markup-testPlanSummary.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Method Statement
+**/
+{template .testPlanMethodStatement}
+	{call .wikiForm}
+  		{param strName}wikiReleaseNoteMethodStatement{/param}
+  		{param strId}wiki-markup-testPlanMethodStatement{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.testPlanMethodStatement.form.wiki-markup-testPlanMethodStatement.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.testPlanMethodStatement.form.wiki-markup-testPlanMethodStatement.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Authority
+**/
+{template .testPlanRisks}
+	{call .wikiForm}
+  		{param strName}wikiReleaseNoteRisks{/param}
+  		{param strId}wiki-markup-testPlanRisks{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.testPlanRisks.form.wiki-markup-testPlanRisks.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.testPlanRisks.form.wiki-markup-testPlanRisks.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Authority
+**/
+{template .testPlanAuthority}
+    <form id="wiki-markup-form" action="#" method="post" class="aui">
+      <fieldset>
+      	{call .labelInputPair}
+      		{param strName}varClientApprover{/param}
+      		{param strId}varClientApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanAuthority.form.varReleaseNoteClientApprover.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varTechApprover{/param}
+      		{param strId}varTechApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanAuthority.form.varReleaseNoteTechApprover.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varSolutionApprover{/param}
+      		{param strId}varSolutionApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanAuthority.form.varReleaseNoteSolutionApprover.label')}{/param}
+      	{/call}
+      </fieldset>
+    </form>
+{/template}
+/**
+*	Timeframe
+**/
+{template .testPlanTimeframe}
+    <form id="wiki-markup-form" action="#" method="post" class="aui">
+      <fieldset>
+      	{call .labelInputPair}
+      		{param strName}varTimescale{/param}
+      		{param strId}varTimescale{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanTimeframe.form.varTimescale.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varReleaseWindow{/param}
+      		{param strId}varReleaseWindow{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.testPlanTimeframe.form.varReleaseWindow.label')}{/param}
+      	{/call}
+      </fieldset>
+    </form>
+{/template}

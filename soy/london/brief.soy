@@ -1,0 +1,148 @@
+{namespace com.itg.plugin.confluence}
+/**
+*	Sets the properties of the brief
+*/
+{template .briefProperties}
+    <form id="frm" action="#" method="post" class="aui">
+      	{call .labelInputPair}
+      		{param strName}varTitle{/param}
+      		{param strId}varTitle{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.briefProperties.form.varTitle.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.briefProperties.form.varTitle.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varProposer{/param}
+      		{param strId}varProposer{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.briefProperties.form.varProposer.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.briefProperties.form.varProposer.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varEmailAddress{/param}
+      		{param strId}varEmailAddress{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.briefProperties.form.varEmailAddress.label')}{/param}
+      		{param strHelpText}{getText('com.itg.plugin.confluence.briefProperties.form.varEmailAddress.helptext')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varBusinessArea{/param}
+      		{param strId}varBusinessArea{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.briefProperties.form.varBusinessArea.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.briefProperties.form.varBusinessArea.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varAuthoriser{/param}
+      		{param strId}varAuthoriser{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.briefProperties.form.varAuthoriser.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.briefProperties.form.varAuthoriser.required')}{/param}
+      	{/call}
+    </form>
+{/template}
+/**
+*	Enter the Summary of details
+*/
+{template .briefSummary}
+	{call .wikiForm}
+  		{param strName}wikiSummary{/param}
+  		{param strId}wiki-markup-Summary{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefSummary.form.wiki-markup-Summary.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.briefSummary.form.wiki-markup-Summary.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter the background
+*/
+{template .briefBackground}
+	{call .wikiForm}
+  		{param strName}wikiBackground{/param}
+  		{param strId}wiki-markup-Background{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefBackground.form.wiki-markup-Background.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.briefBackground.form.wiki-markup-Background.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter the main objectives
+*/
+{template .briefObjectives}
+	{call .wikiForm}
+  		{param strName}wikiObjectives{/param}
+  		{param strId}wiki-markup-Objectives{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefObjectives.form.wiki-markup-Objectives.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.briefObjectives.form.wiki-markup-Objectives.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter the Key Business Requirements
+*/
+{template .briefRequirements}
+	{call .wikiForm}
+  		{param strName}wikiRequirements{/param}
+  		{param strId}wiki-markup-Requirements{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefRequirements.form.wiki-markup-Requirements.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.briefRequirements.form.wiki-markup-Requirements.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter the details of scope
+*/
+{template .briefScope}
+	{call .wikiForm}
+  		{param strName}wikiScope{/param}
+  		{param strId}wiki-markup-Scope{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefScope.form.wiki-markup-Scope.label')}{/param}
+      	{param strDefaultText}{getText('com.itg.plugin.confluence.briefScope.form.wiki-markup-Scope.defaulttext')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter a description of the Benefits
+*/
+{template .briefBenefits}
+	{call .wikiForm}
+  		{param strName}wikiBenefits{/param}
+  		{param strId}wiki-markup-Benefits{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefBenefits.form.wiki-markup-Benefits.label')}{/param}
+      	{param strDefaultText}{getText('com.itg.plugin.confluence.briefBenefits.form.wiki-markup-Benefits.defaulttext')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter the Timeframe
+*/
+{template .briefTimeframe}
+	{call .wikiForm}
+  		{param strName}wikiTimeframe{/param}
+  		{param strId}wiki-markup-Timeframe{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefTimeframe.form.wiki-markup-Timeframe.label')}{/param}
+      	{param strDefaultText}{getText('com.itg.plugin.confluence.briefTimeframe.form.wiki-markup-Timeframe.defaulttext')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter details of any known risks
+*/
+{template .briefRisks}
+	{call .wikiForm}
+  		{param strName}wikiRisks{/param}
+  		{param strId}wiki-markup-Risks{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefRisks.form.wiki-markup-Risks.label')}{/param}
+      	{param strDefaultText}{getText('com.itg.plugin.confluence.briefRisks.form.wiki-markup-Risks.defaulttext')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter details of any known constraints
+*/
+{template .briefConstraints}
+	{call .wikiForm}
+  		{param strName}wikiConstraints{/param}
+  		{param strId}wiki-markup-Constraints{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefConstraints.form.wiki-markup-Constraints.label')}{/param}
+      	{param strDefaultText}{getText('com.itg.plugin.confluence.briefConstraints.form.wiki-markup-Constraints.defaulttext')}{/param}
+  	{/call}
+{/template}
+/**
+*	Enter details of key stakeholders
+*/
+{template .briefStakeholders}
+	{call .wikiForm}
+  		{param strName}wikiStakeholders{/param}
+  		{param strId}wiki-markup-Stakeholders{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.briefStakeholders.form.wiki-markup-Stakeholders.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.briefStakeholders.form.wiki-markup-Stakeholders.required')}{/param}
+  	{/call}
+{/template}

@@ -1,0 +1,172 @@
+-- create schema
+CREATE SCHEMA itg
+    AUTHORIZATION postgres;
+
+-- create sequences
+CREATE SEQUENCE itg.blueprint_departments_id_seq;
+CREATE SEQUENCE itg.blueprint_documents_clients_seq;
+CREATE SEQUENCE itg.blueprint_templates_id_seq;
+CREATE SEQUENCE itg.blueprint_wizard_seq;
+
+-- create tables
+CREATE TABLE itg.blueprint_departments
+(
+    id integer NOT NULL DEFAULT nextval('itg.blueprint_departments_id_seq'::regclass),
+    department character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT blueprint_departments_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE itg.blueprint_documents_clients
+(
+    id integer NOT NULL DEFAULT nextval('itg.blueprint_documents_clients_seq'::regclass),
+    client_key character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    client_name character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    default_space_key character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    client_logo_file_name character varying(50) COLLATE pg_catalog."default" NOT NULL DEFAULT 'notfound-logo.png'::character varying,
+    jira_project_key character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT blueprint_documents_clients_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE itg.blueprint_jr_job_steps
+(
+    id integer NOT NULL DEFAULT nextval('itg.blueprint_wizard_seq'::regclass),
+    step_name character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    step_command character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    database character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    on_success_action character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    on_failure_action character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    type character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    retry_attempts integer NOT NULL,
+    session_key bigint NOT NULL
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+CREATE TABLE itg.blueprint_jr_segment_info
+(
+    id integer NOT NULL DEFAULT nextval('itg.blueprint_wizard_seq'::regclass),
+    server_name character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    database character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    schema character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    segment_table character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    brand character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    mailing_id integer NOT NULL,
+    session_key bigint NOT NULL
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+CREATE TABLE itg.blueprint_templates
+(
+    id integer NOT NULL DEFAULT nextval('itg.blueprint_templates_id_seq'::regclass),
+    template_name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    department integer NOT NULL,
+    enabled boolean NOT NULL DEFAULT true,
+    default_status character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT blueprint_templates_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_itg_templates_itg_departments FOREIGN KEY (department)
+        REFERENCES itg.blueprint_departments (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+-- Create functions
+CREATE OR REPLACE FUNCTION itg.getclientsinspace(
+	spacekey character varying)
+RETURNS TABLE(client_name character varying, id integer)
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE LEAKPROOF
+    ROWS 1000
+AS $BODY$
+
+DECLARE qry text;
+BEGIN
+
+	IF (select count(*) from itg.blueprint_documents_clients WHERE default_space_key = spaceKey) > 0 THEN
+ 		RETURN QUERY SELECT itg.blueprint_documents_clients.client_name, itg.blueprint_documents_clients.id FROM itg.blueprint_documents_clients WHERE default_space_key = spaceKey ORDER BY client_name;
+
+	ELSE
+ 		RETURN QUERY SELECT itg.blueprint_documents_clients.client_name, itg.blueprint_documents_clients.id FROM itg.blueprint_documents_clients ORDER BY client_name;
+
+	END IF;
+
+END;
+
+$BODY$;
+
+ALTER FUNCTION itg.getclientsinspace(character varying)
+    OWNER TO "ITGRWUser";
+-- add auth for th
+GRANT ALL ON SCHEMA itg TO "ITGRWUser";
+
+GRANT ALL ON SEQUENCE itg.blueprint_departments_id_seq TO "ITGRWUser";
+GRANT ALL ON SEQUENCE itg.blueprint_documents_clients_seq TO "ITGRWUser";
+GRANT ALL ON SEQUENCE itg.blueprint_templates_id_seq TO "ITGRWUser";
+GRANT ALL ON SEQUENCE itg.blueprint_wizard_seq TO "ITGRWUser";
+
+GRANT ALL ON TABLE itg.blueprint_departments TO "ITGRWUser";
+GRANT ALL ON TABLE itg.blueprint_documents_clients TO "ITGRWUser";
+GRANT ALL ON TABLE itg.blueprint_jr_job_steps TO "ITGRWUser";
+GRANT ALL ON TABLE itg.blueprint_jr_segment_info TO "ITGRWUser";
+GRANT ALL ON TABLE itg.blueprint_templates TO "ITGRWUser";
+
+-- add db admin users (optional)
+GRANT ALL ON SCHEMA itg TO "steve.killelay";
+
+GRANT ALL ON SEQUENCE itg.blueprint_departments_id_seq TO "steve.killelay";
+GRANT ALL ON SEQUENCE itg.blueprint_documents_clients_seq TO "steve.killelay";
+GRANT ALL ON SEQUENCE itg.blueprint_templates_id_seq TO "steve.killelay";
+GRANT ALL ON SEQUENCE itg.blueprint_wizard_seq TO "steve.killelay";
+
+GRANT ALL ON TABLE itg.blueprint_departments TO "steve.killelay";
+GRANT ALL ON TABLE itg.blueprint_documents_clients TO "steve.killelay";
+GRANT ALL ON TABLE itg.blueprint_jr_job_steps TO "steve.killelay";
+GRANT ALL ON TABLE itg.blueprint_jr_segment_info TO "steve.killelay";
+GRANT ALL ON TABLE itg.blueprint_templates TO "steve.killelay";
+
+GRANT ALL ON SCHEMA itg TO "dale.peacock";
+
+GRANT ALL ON SEQUENCE itg.blueprint_departments_id_seq TO "dale.peacock";
+GRANT ALL ON SEQUENCE itg.blueprint_documents_clients_seq TO "dale.peacock";
+GRANT ALL ON SEQUENCE itg.blueprint_templates_id_seq TO "dale.peacock";
+GRANT ALL ON SEQUENCE itg.blueprint_wizard_seq TO "dale.peacock";
+
+GRANT ALL ON TABLE itg.blueprint_departments TO "dale.peacock";
+GRANT ALL ON TABLE itg.blueprint_documents_clients TO "dale.peacock";
+GRANT ALL ON TABLE itg.blueprint_jr_job_steps TO "dale.peacock";
+GRANT ALL ON TABLE itg.blueprint_jr_segment_info TO "dale.peacock";
+GRANT ALL ON TABLE itg.blueprint_templates TO "dale.peacock";
+
+GRANT EXECUTE ON FUNCTION itg.getclientsinspace(character varying) TO PUBLIC;
+
+-- populate oob options
+INSERT INTO itg.blueprint_departments(department)
+	VALUES ('ITG Creator')
+	,('ITG Digital');
+
+INSERT INTO itg.blueprint_templates(template_name, department, enabled, default_status)
+	VALUES ( 'Brief', 1, true, 'confidential')
+	,( 'Release Note', 1, true, 'confidential')
+	,( 'Change Request', 1, true, 'confidential')
+	,( 'DBA Change Request', 1, true, 'internal')
+	,( 'job Request', 1, true, 'internal')
+	,( 'Social Media Brief', 2, true, 'confidential')
+	,( 'Email Brief', 2, true, 'confidential')
+	,( 'Content Brief', 2, true, 'confidential')
+	,( 'Landing Page / Website Brief', 2, true, 'confidential')
+	,( 'Creative Brief', 2, true, 'confidential');

@@ -1,0 +1,112 @@
+{namespace com.itg.plugin.confluence}
+/**
+ * Release-note
+*/
+{template .releaseNoteProperties}
+	<form action="#" id="releaseNoteProperties" method="post" class="aui">
+      	{call .labelInputPair}
+      		{param strName}varTitle{/param}
+      		{param strId}varTitle{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteProperties.form.varTitle.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.releaseNoteProperties.form.varTitle.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varProposer{/param}
+      		{param strId}varProposer{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteProperties.form.varProposer.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.releaseNoteProperties.form.varProposer.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varAuthoriser{/param}
+      		{param strId}varAuthoriser{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteProperties.form.varAuthoriser.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.releaseNoteProperties.form.varAuthoriser.required')}{/param}
+      	{/call}
+	</form>
+{/template}
+/**
+*	Summary
+*/
+{template .releaseNoteSummary}
+
+	<form action="#" id="releaseNoteProperties" method="post" class="aui">
+        {call .labelInputPair}
+      		{param strName}varServerDetails{/param}
+      		{param strId}varServerDetails{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteProperties.form.varServerDetails.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.releaseNoteProperties.form.varServerDetails.required')}{/param}
+        {/call}
+        {call .wikiForm}
+            {param optNoWrap}true{/param} /** exclude form container **/
+            {param strName}wikiSummary{/param}
+            {param strId}wiki-markup-releaseNoteSummary{/param}
+            {param strLabel}{getText('com.itg.plugin.confluence.releaseNoteSummary.form.wiki-markup-Summary.label')}{/param}
+            {param strRequiredText}{getText('com.itg.plugin.confluence.releaseNoteSummary.form.wiki-markup-Summary.required')}{/param}
+        {/call}
+	</form>
+{/template}
+/**
+*	Method Statement
+**/
+{template .releaseNoteMethodStatement}
+	{call .wikiForm}
+  		{param strName}wikiMethodStatement{/param}
+  		{param strId}wiki-markup-releaseNoteMethodStatement{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteMethodStatement.form.wiki-markup-MethodStatement.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.releaseNoteMethodStatement.form.wiki-markup-MethodStatement.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Authority
+**/
+{template .releaseNoteRisks}
+	{call .wikiForm}
+  		{param strName}wikiRisks{/param}
+  		{param strId}wiki-markup-releaseNoteRisks{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteRisks.form.wiki-markup-Risks.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.releaseNoteRisks.form.wiki-markup-Risks.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Authority
+**/
+{template .releaseNoteAuthority}
+    <form id="wiki-markup-form" action="#" method="post" class="aui">
+      <fieldset>
+      	{call .labelInputPair}
+      		{param strName}varClientApprover{/param}
+      		{param strId}varClientApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteAuthority.form.varClientApprover.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varTechApprover{/param}
+      		{param strId}varTechApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteAuthority.form.varTechApprover.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varSolutionApprover{/param}
+      		{param strId}varSolutionApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteAuthority.form.varSolutionApprover.label')}{/param}
+      	{/call}
+      </fieldset>
+    </form>
+{/template}
+/**
+*	Timeframe
+**/
+{template .releaseNoteTimeframe}
+    <form id="wiki-markup-form" action="#" method="post" class="aui">
+      <fieldset>
+      	{call .labelInputPair}
+      		{param strName}varTimescale{/param}
+      		{param strId}varTimescale{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteTimeframe.form.varTimescale.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varReleaseWindow{/param}
+      		{param strId}varReleaseWindow{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.releaseNoteTimeframe.form.varReleaseWindow.label')}{/param}
+      	{/call}
+      </fieldset>
+    </form>
+{/template}

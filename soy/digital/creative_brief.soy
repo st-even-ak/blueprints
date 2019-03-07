@@ -1,0 +1,32 @@
+{namespace com.itg.plugin.confluence}
+/**
+*	Sets the properties of the brief
+*/
+{template .creativeBriefProperties}
+    <form id="frm" action="#" method="post" class="aui">
+      	{call .labelSelectPairBoolean}
+      		{param strName}varPlatform{/param}
+      		{param strId}varPlatform{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.creativeBriefProperties.form.varPlatform.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varTitle{/param}
+      		{param strId}varTitle{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.creativeBriefProperties.form.varTitle.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.creativeBriefProperties.form.varTitle.required')}{/param}
+      	{/call}
+		{call .labelInputPair}
+			{param strName}varImplementationDate{/param}
+			{param strId}varImplementationDate{/param}
+			{param type}date{/param}
+			{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varImplementationDate.label')}{/param}
+			{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varImplementationDate.required')}{/param}
+		{/call}
+      	{call .labelInputPair}
+      		{param strName}varBudget{/param}
+      		{param strId}varBudget{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.creativeBriefProperties.form.varBudget.label')}{/param}
+      		{param strHelpText}{getText('com.itg.plugin.confluence.creativeBriefProperties.form.varBudget.helptext')}{/param}
+      	{/call}
+    </form>
+{/template}

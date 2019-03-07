@@ -1,0 +1,442 @@
+<!--
+  ~ Author: steve.killelay
+  ~ Last Updated: 20/02/19 16:21
+  ~
+  ~ Copyright {c} 2019, ITG
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  ~
+  ~ Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  ~ Redistributions in binary form must reproduce the above copyright notice,  this list of conditions and the following disclaimer in the documentation  and/or other materials provided with the distribution.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  ~ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  ~ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ~ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+  ~ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  ~ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  ~ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  ~ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  ~ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  ~ POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+<ac:layout>
+	<ac:layout-section ac:type="two_right_sidebar">
+		<ac:layout-cell>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<table class="wrapped relative-table" style="width: 100.0%;">
+						<colgroup> <col style="width: 30.0%;"/> <col style="width: 50.0%;"/> <col style="width: 20.0%;"/> </colgroup>
+						<tbody>
+							<tr>
+								<th colspan="3" style="text-align: center;">
+									<h1>Brief</h1>
+								</th>
+							</tr>
+							<tr>
+								<td>
+									<strong>Name of this Brief</strong>
+								</td>
+								<td>
+									<at:var at:name="varTitle" /></td>
+								<td rowspan="6">
+									<div class="content-wrapper">
+										<p>
+											<ac:image>
+												<ri:attachment ri:filename="$LogoFile$"/>
+											</ac:image>
+										</p>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Project</strong>
+								</td>
+								<td>
+									<at:var at:name="varProject" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Client</strong>
+								</td>
+								<td>
+									<at:var at:name="varClient" /></td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Briefed in By</strong>
+								</td>
+								<td>
+									<at:var at:name="varEmailAddress" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Deadline date (go live)</strong>
+								</td>
+								<td>
+									<at:var at:name="varCreatedDate" />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Date</strong>
+								</td>
+								<td>
+									<at:var at:name="varCreatedDate" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+		</ac:layout-cell>
+		<ac:layout-cell>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<table class="wrapped relative-table" style="width: 100%;">
+						<colgroup>
+							<col style="width: 50%;"/>
+							<col style="width: 50%;"/>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th colspan="1">Document Security Status</th>
+								<td colspan="1">
+									<at:var at:name="macro-status" />
+								</td>
+							</tr>
+							<tr>
+								<th colspan="1">JIRA Id</th>
+								<td colspan="1">
+									<at:var at:name="macro-jira" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<ac:structured-macro ac:name="noprint" ac:schema-version="1">
+						<ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+						<ac:parameter ac:name="hidden">true</ac:parameter>
+						<ac:rich-text-body>
+							<p>
+								<ac:structured-macro ac:name="toc" ac:schema-version="1">
+									<ac:parameter ac:name="maxLevel">3</ac:parameter>
+								</ac:structured-macro>
+							</p>
+						</ac:rich-text-body>
+					</ac:structured-macro>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+		</ac:layout-cell>
+	</ac:layout-section>
+	<ac:layout-section ac:type="single">
+		<ac:layout-cell>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Description</h1>
+					<ac:structured-macro ac:name="excerpt" ac:schema-version="1">
+						<ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+						<ac:rich-text-body>
+							<at:var at:name="wikiSummary" at:rawXhtml="true"/>
+						</ac:rich-text-body>
+					</ac:structured-macro>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Page Setup</h1>
+					<table class="wrapped">
+						<colgroup>
+							<col/>
+							<col/>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>Facebook Business Page Required</th>
+								<th>
+									<br/>
+								</th>
+							</tr>
+							<tr>
+								<th>
+									<div class="content-wrapper">
+										<p>{ if yes }<br/>
+											<br/>
+											<br/>
+										</p>
+										<p>
+											<br/>
+										</p>
+									</div>
+								</th>
+								<th>
+									<p>
+										<br/>
+									</p>
+									<table class="wrapped">
+										<tbody>
+											<tr>
+												<th>Page Name:</th>
+												<th>
+													<br/>
+												</th>
+											</tr>
+											<tr>
+												<th>Description</th>
+												<td>
+													<br/>
+												</td>
+											</tr>
+											<tr>
+												<th>Address</th>
+												<td>
+													<br/>
+												</td>
+											</tr>
+											<tr>
+												<th>Phone Number</th>
+												<td>
+													<br/>
+												</td>
+											</tr>
+											<tr>
+												<th>Website url</th>
+												<td>
+													<br/>
+												</td>
+											</tr>
+											<tr>
+												<th>Profile photo</th>
+												<td>(Attached)</td>
+											</tr>
+											<tr>
+												<th colspan="1">Cover photo</th>
+												<td colspan="1">
+													<span>(Attached)</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<p>
+										<br/>
+									</p>
+								</th>
+							</tr>
+							<tr>
+								<th colspan="1">{ if no }</th>
+								<th colspan="1">
+									<p>
+										<br/>
+									</p>
+									<table class="wrapped">
+										<tbody>
+											<tr>
+												<td>Please supply admin rights to existing page</td>
+												<th>
+													<br/>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									<p>
+										<br/>
+									</p>
+								</th>
+							</tr>
+						</tbody>
+					</table>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Content</h1>
+					<table class="wrapped">
+						<colgroup>
+							<col/>
+							<col/>
+							<col/>
+							<col/>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>What are the Main KPIs for the page?</th>
+								<th>
+									<br/>
+								</th>
+								<th>
+									<span>How many posts to be scheduled</span>
+								</th>
+								<th>
+									<br/>
+								</th>
+							</tr>
+							<tr>
+								<th>Campaign Start and End dates</th>
+								<td>
+									<br/>
+								</td>
+								<th>
+									<span>Do you require a content calendar</span>
+								</th>
+								<td>
+									<br/>
+								</td>
+							</tr>
+							<tr>
+								<th>Assets Supplied</th>
+								<td>
+									<br/>
+								</td>
+								<th>
+									<span>Timings for Posts</span>
+								</th>
+								<td>
+									<br/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Set up and Budget</h1>
+					<table class="wrapped">
+						<colgroup>
+							<col/>
+							<col/>
+							<col/>
+							<col/>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>Do you have a strategy or campaign already running?</th>
+								<th>
+									<br/>
+								</th>
+								<th>Campaign budget split for media spend per post</th>
+								<th>
+									<br/>
+								</th>
+							</tr>
+							<tr>
+								<th>Type of advert required</th>
+								<td>
+									<br/>
+								</td>
+								<th>Demographic and location data supplied</th>
+								<td>
+									<br/>
+								</td>
+							</tr>
+							<tr>
+								<th>Destination url and url headline for link cliicks</th>
+								<td>
+									<br/>
+								</td>
+								<th>CTA preference</th>
+								<td>
+									<br/>
+								</td>
+							</tr>
+							<tr>
+								<th>Newsfeed link description</th>
+								<td>
+									<br/>
+								</td>
+								<th>
+									<br/>
+								</th>
+								<td>
+									<br/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Additional Information</h1>
+					<at:var at:name="wikiBackground" at:rawXhtml="true"/>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Copywriting requirements</h1>
+					<p>
+						<br/>
+					</p>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro  ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Creative Requirements</h1>
+					<h3>Key Business Objectives</h3>
+					<at:var at:name="wikiBackground" at:rawXhtml="true"/>
+					<h3>Audience</h3>
+					<at:var at:name="wikiBackground" at:rawXhtml="true"/>
+					<h3>Communication Objectives</h3>
+					<at:var at:name="wikiBackground" at:rawXhtml="true"/>
+					<h3>Creative adaptations or new creative</h3>
+					<at:var at:name="wikiBackground" at:rawXhtml="true"/>
+					<h3>Assets</h3>
+					<at:var at:name="wikiBackground" at:rawXhtml="true"/>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro ac:name="info" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>
+						<span>Further Reference Documents </span>
+					</h1>
+					<p>
+						<ac:structured-macro ac:name="attachments" ac:schema-version="1"/>
+					</p>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro ac:name="note" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Document Control</h1>
+					<h3>Purpose of this Document</h3>
+					<p>The purpose of this document is for the proposer of a new initiative desiring work from ITG, to provide some initial briefing information about their proposal to ITG.<br/> This initial Brief should include the key objectives of the proposed project, the potential anticipated benefits (opportunities it will enable to be maximised or problems it is seeking to address), and any particular constraints, dependencies, mission-critical or regulatory timings the proposer may be aware of and wish to highlight. </p>The document should describe your key business needs, outlining what you are seeking to be able to do and achieve via the initiative.<br/> The Brief should be sufficient to be used as an initial reference for a first evaluation to be conducted with ITG, in order for ITG to asses, consult with you and follow-up with a proposal of possible solution route(s) and an associated initial work-sizing and pricing estimate in response.<br/>
+					<h3>
+						<strong>Documents Control Statement</strong>
+					</h3>
+					<p>The following outlines the access, handling, communication and disposal guidelines that are followed by The Information Assurance Programme for this document based on the assigned classification. For this document, which has a classification of <strong>CONFIDENTIAL</strong>, the following is recommended:</p>
+					<h4>Access Guidelines</h4>
+					<ul>
+						<li>CONFIDENTIAL. Please refer to corporate policy for further details.</li>
+					</ul>
+					<h4>Handling Guidelines</h4>
+					<ul>
+						<li>Documents will be stored on the ITG SharePoint system.</li>
+						<li>Where hardcopies of documents are created, they will be stored under lock and key.</li>
+					</ul>
+					<h4>Communications Guidelines</h4>
+					<ul>
+						<li>Documents which are to be communicated external to ITG must be produced in protected PDF format, with the ‘copy text’ function disabled.</li>
+						<li>Documents that are created within the Microsoft office suite of products must have ‘Information Rights Management’ enabled, where possible, to control distribution within ITG</li>
+						<li>Documents that are communicated external to ITG must be done so in line with corporate policy.</li>
+					</ul>
+					<h4>Disposal Guidelines</h4>
+					<ul>
+						<li>All copies of this document will be disposed of in line with corporate policy.</li>
+					</ul>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+			<ac:structured-macro ac:name="panel" ac:schema-version="1">
+				<ac:rich-text-body>
+					<h1>Version History</h1>
+					<p>
+						<ac:structured-macro ac:name="change-history" ac:schema-version="1"/>
+					</p>
+				</ac:rich-text-body>
+			</ac:structured-macro>
+		</ac:layout-cell>
+	</ac:layout-section>
+</ac:layout>

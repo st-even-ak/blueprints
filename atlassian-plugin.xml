@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Author: steve.killelay
+  ~ Last Updated: 26/02/19 16:41
+  ~
+  ~ Copyright {c} 2019, ITG
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  ~
+  ~ Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  ~ Redistributions in binary form must reproduce the above copyright notice,  this list of conditions and the following disclaimer in the documentation  and/or other materials provided with the distribution.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  ~ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  ~ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ~ ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+  ~ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  ~ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  ~ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  ~ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  ~ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  ~ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  ~ POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+	<plugin-info>
+		<description>${project.description}</description>
+		<version>${project.version}</version>
+		<vendor name="${project.organization.name}" url="${project.organization.url}" />
+		<param name="plugin-icon">images/itg-icon.png</param>
+		<param name="plugin-logo">images/itg-logo.png</param>
+		<param name="configure.url">/plugins/servlet/dba</param>
+	</plugin-info>
+
+	<!-- add our i18n resource -->
+	<resource type="i18n" name="document-blueprints.properties" location="document-blueprints"/>
+
+	<!-- add our web resources -->
+	<web-resource key="document-blueprints-resources" i18n-name-key="document-blueprints-resources">
+		<description key="document-blueprints-resources.description" i18n-name-key="document-blueprints-resources.description" />
+		<dependency>com.atlassian.auiplugin:ajs</dependency>
+		<dependency>com.atlassian.confluence.plugins.confluence-create-content-plugin:resources</dependency>
+		<dependency>com.atlassian.auiplugin:aui-form-validation</dependency>
+		<dependency>com.atlassian.auiplugin:aui-form-notification</dependency>
+		<dependency>com.atlassian.auiplugin:aui-restfultable</dependency>
+
+		<transformation extension="js">
+			<transformer key="jsI18n"/>
+		</transformation>
+
+		<!-- transform Soy templates into JS -->
+		<transformation extension="soy">
+			<transformer key="soyTransformer">
+				<functions>com.atlassian.confluence.plugins.soy:soy-core-functions
+				</functions>
+			</transformer>
+		</transformation>
+
+		<!--Common resources-->
+		<resource type="download" name="document-blueprints.css" location="css/document-blueprints.css" />
+		<resource type="download" name="document-blueprints.js" location="js/document-blueprints.js" />
+		<resource type="download" name="images" location="images/*" />
+		<resource type="download" name="master.soy.js" location="soy/master.soy" />
+		<!--London-->
+		<resource type="download" name="brief.soy.js" location="soy/london/brief.soy" />
+		<resource type="download" name="change_request.soy.js" location="soy/london/change_request.soy" />
+		<resource type="download" name="dba_change_request.soy.js" location="soy/london/dba_change_request.soy" />
+		<resource type="download" name="release_note.soy.js" location="soy/london/release_note.soy" />
+		<resource type="download" name="deployment_plan.soy.js" location="soy/london/deployment_plan.soy" />
+		<resource type="download" name="job_request.soy.js" location="soy/london/job_request.soy" />
+		<!--Digital (B'ham)-->
+		<resource type="download" name="socialmedia_brief.soy.js" location="soy/digital/socialmedia_brief.soy" />
+		<resource type="download" name="email_brief.soy.js" location="soy/digital/email_brief.soy" />
+		<resource type="download" name="creative_brief.soy.js" location="soy/digital/creative_brief.soy" />
+		<resource type="download" name="landingpage_brief.soy.js" location="soy/digital/landingpage_brief.soy" />
+		<resource type="download" name="content_brief.soy.js" location="soy/digital/content_brief.soy" />
+		<resource type="download" name="digital_common_pages.soy.js" location="soy/digital/digital_common_pages.soy" />
+
+		<context>document-blueprints-resources</context>
+		<context>atl.general</context>
+		<context>atl.admin</context>
+	</web-resource>
+
+	<web-resource key="document-blueprints-resources-admin" i18n-name-key="document-blueprints-resources-admin">
+		<description key="document-blueprints-resources-admin-description" i18n-name-key="document-blueprints-resources-admin.description" />
+		<dependency>com.atlassian.auiplugin:aui-restfultable</dependency>
+
+		<transformation extension="js">
+			<transformer key="jsI18n"/>
+		</transformation>
+
+		<!-- transform Soy templates into JS -->
+		<transformation extension="soy">
+			<transformer key="soyTransformer">
+				<functions>com.atlassian.confluence.plugins.soy:soy-core-functions
+				</functions>
+			</transformer>
+		</transformation>
+
+		<!-- Admin page -->
+		<resource type="download" name="dashboard.vm" location="admin-templates/dashboard.vm"/>
+		<resource type="download" name="document-blueprints-admin.js" location="js/document-blueprints-admin.js" />
+		<context>document-blueprints-resources-admin</context>
+		<context>atl.admin</context>
+	</web-resource>
+
+	<!-- Add to the Create Menu -->
+	<web-item key="create-document-blueprint" i18n-name-key="create-document-blueprint" section="system.create.dialog/content">
+		<description key="create-document-blueprint.description" i18n-name-key="create-document-blueprint.description" />
+		<resource name="icon" type="download" location="images/itg-icon.png" />
+		<param name="blueprintKey" value="document-blueprint" />
+	</web-item>
+
+	<!-- Blueprint -->
+	<blueprint key="document-blueprint" i18n-name-key="document-blueprint" index-key="document-blueprint-templates" create-result="view" disable-index-page="true">
+		<description key="document-blueprint.description" i18n-name-key="document-blueprint.description" />
+		<!--London-->
+		<content-template ref="itg-brief-template" />
+		<content-template ref="itg-release note-template" />
+		<content-template ref="itg-change request-template" />
+		<content-template ref="itg-DBA change request-template" />
+		<content-template ref="itg-job request-template" />
+		<content-template ref="itg-deployment plan-template" />
+		<!--Digital (B'ham)-->
+		<content-template ref="itg-social media brief-template" />
+		<content-template ref="itg-email brief-template" />
+		<content-template ref="itg-content brief-template" />
+		<content-template ref="itg-landing page / website brief-template" />
+		<content-template ref="itg-creative brief-template" />
+
+		<dialog-wizard key="document-blueprint-wizard">
+			<dialog-page id="templateSelectionForm" template-key="com.itg.plugin.confluence.templateSelectionForm"
+						 title-key="com.itg.plugin.confluence.wizard.templateSelectionForm.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.templateSelectionForm.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.templateSelectionForm.desc.content"/>
+
+			<!-- Brief Wizard Path Pages -->
+			<dialog-page id="briefProperties" template-key="com.itg.plugin.confluence.briefProperties"
+						 title-key="com.itg.plugin.confluence.wizard.briefProperties.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefProperties.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefProperties.desc.content"/>
+			<dialog-page id="briefSummary" template-key="com.itg.plugin.confluence.briefSummary"
+						 title-key="com.itg.plugin.confluence.wizard.briefSummary.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefSummary.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefSummary.desc.content"/>
+			<dialog-page id="briefBackground" template-key="com.itg.plugin.confluence.briefBackground"
+						 title-key="com.itg.plugin.confluence.wizard.briefBackground.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefBackground.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefBackground.desc.content"/>
+			<dialog-page id="briefObjectives" template-key="com.itg.plugin.confluence.briefObjectives"
+						 title-key="com.itg.plugin.confluence.wizard.briefObjectives.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefObjectives.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefObjectives.desc.content"/>
+			<dialog-page id="briefRequirements" template-key="com.itg.plugin.confluence.briefRequirements"
+						 title-key="com.itg.plugin.confluence.wizard.briefRequirements.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefRequirements.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefRequirements.desc.content"/>
+			<dialog-page id="briefBenefits" template-key="com.itg.plugin.confluence.briefBenefits"
+						 title-key="com.itg.plugin.confluence.wizard.briefBenefits.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefBenefits.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefBenefits.desc.content"/>
+			<dialog-page id="briefScope" template-key="com.itg.plugin.confluence.briefScope"
+						 title-key="com.itg.plugin.confluence.wizard.briefScope.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefScope.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefScope.desc.content"/>
+			<dialog-page id="briefTimeframe" template-key="com.itg.plugin.confluence.briefTimeframe"
+						 title-key="com.itg.plugin.confluence.wizard.briefTimeframe.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefTimeframe.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefTimeframe.desc.content"/>
+			<dialog-page id="briefRisks" template-key="com.itg.plugin.confluence.briefRisks"
+						 title-key="com.itg.plugin.confluence.wizard.briefRisks.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefRisks.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefRisks.desc.content"/>
+			<dialog-page id="briefConstraints" template-key="com.itg.plugin.confluence.briefConstraints"
+						 title-key="com.itg.plugin.confluence.wizard.briefConstraints.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefConstraints.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefConstraints.desc.content"/>
+			<dialog-page id="briefStakeholders" template-key="com.itg.plugin.confluence.briefStakeholders"
+						 title-key="com.itg.plugin.confluence.wizard.briefStakeholders.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.briefStakeholders.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.briefStakeholders.desc.content"
+						 last="true"/>
+
+			<!-- ReleaseNote Wizard Path Pages -->
+			<dialog-page id="releaseNoteProperties" template-key="com.itg.plugin.confluence.releaseNoteProperties"
+						 title-key="com.itg.plugin.confluence.wizard.releaseNoteProperties.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.releaseNoteProperties.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.releaseNoteProperties.desc.content" />
+			<dialog-page id="releaseNoteSummary" template-key="com.itg.plugin.confluence.releaseNoteSummary"
+						 title-key="com.itg.plugin.confluence.wizard.releaseNoteSummary.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.releaseNoteSummary.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.releaseNoteSummary.desc.content" />
+			<dialog-page id="releaseMethodStatement" template-key="com.itg.plugin.confluence.releaseNoteMethodStatement"
+						 title-key="com.itg.plugin.confluence.wizard.releaseMethodStatements.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.releaseMethodStatement.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.releaseMethodStatement.desc.content" />
+			<dialog-page id="releaseNoteRisks" template-key="com.itg.plugin.confluence.releaseNoteRisks"
+						 title-key="com.itg.plugin.confluence.wizard.releaseNoteRisks.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.releaseNoteRisks.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.releaseNoteRisks.desc.content" />
+			<dialog-page id="releaseNoteTimeframe" template-key="com.itg.plugin.confluence.releaseNoteTimeframe"
+						 title-key="com.itg.plugin.confluence.wizard.releaseNoteTimeframe.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.releaseNoteTimeframe.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.releaseNoteTimeframe.desc.content"
+						 last="true"/>
+			<!-- TODO: Future implementation requires this step -->
+			<!--             <dialog-page id="releaseNoteAuthority" template-key="com.itg.plugin.confluence.releaseNoteAuthority"
+			title-key="com.itg.plugin.confluence.wizard.releaseNoteAuthority.title"
+			description-header-key="com.itg.plugin.confluence.wizard.releaseNoteAuthority.desc.header"
+			description-content-key="com.itg.plugin.confluence.wizard.releaseNoteAuthority.desc.content"
+			last="true" /> -->
+
+			<!-- changeRequest Wizard Path Pages -->
+			<dialog-page id="changeRequestProperties" template-key="com.itg.plugin.confluence.changeRequestProperties"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestProperties.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestProperties.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestProperties.desc.content"/>
+			<dialog-page id="changeRequestSummary" template-key="com.itg.plugin.confluence.changeRequestSummary"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestSummary.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestSummary.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestSummary.desc.content"/>
+			<dialog-page id="changeRequestBackground" template-key="com.itg.plugin.confluence.changeRequestBackground"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestBackground.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestBackground.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestBackground.desc.content"/>
+			<dialog-page id="changeRequestObjectives" template-key="com.itg.plugin.confluence.changeRequestObjectives"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestObjectives.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestObjectives.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestObjectives.desc.content"/>
+			<dialog-page id="changeRequestRequirements" template-key="com.itg.plugin.confluence.changeRequestRequirements"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestRequirements.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestRequirements.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestRequirements.desc.content"/>
+			<dialog-page id="changeRequestBenefits" template-key="com.itg.plugin.confluence.changeRequestBenefits"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestBenefits.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestBenefits.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestBenefits.desc.content"/>
+			<dialog-page id="changeRequestScope" template-key="com.itg.plugin.confluence.changeRequestScope"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestScope.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestScope.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestScope.desc.content"/>
+			<dialog-page id="changeRequestTimeframe" template-key="com.itg.plugin.confluence.changeRequestTimeframe"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestTimeframe.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestTimeframe.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestTimeframe.desc.content"/>
+			<dialog-page id="changeRequestRisks" template-key="com.itg.plugin.confluence.changeRequestRisks"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestRisks.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestRisks.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestRisks.desc.content"/>
+			<dialog-page id="changeRequestConstraints" template-key="com.itg.plugin.confluence.changeRequestConstraints"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestConstraints.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestConstraints.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestConstraints.desc.content"/>
+			<dialog-page id="changeRequestStakeholders" template-key="com.itg.plugin.confluence.changeRequestStakeholders"
+						 title-key="com.itg.plugin.confluence.wizard.changeRequestStakeholders.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.changeRequestStakeholders.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.changeRequestStakeholders.desc.content"
+						 last="true"/>
+
+			<!-- jobRequest Wizard Path Pages -->
+			<dialog-page id="jobRequestProperties" template-key="com.itg.plugin.confluence.jobRequestProperties"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestProperties.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestProperties.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestProperties.desc.content"/>
+			<dialog-page id="jobRequestProperties2" template-key="com.itg.plugin.confluence.jobRequestProperties2"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestProperties.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestProperties.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestProperties.desc.content"/>
+			<dialog-page id="jobRequestDescription" template-key="com.itg.plugin.confluence.jobRequestDescription"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestDescription.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestDescription.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestDescription.desc.content"/>
+			<dialog-page id="jobRequestDependencies" template-key="com.itg.plugin.confluence.jobRequestDependencies"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestDependencies.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestDependencies.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestDependencies.desc.content"/>
+			<dialog-page id="jobRequestJobSteps" template-key="com.itg.plugin.confluence.jobRequestJobSteps"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestJobSteps.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestJobSteps.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestJobSteps.desc.content"/>
+			<dialog-page id="jobRequestMonitoring" template-key="com.itg.plugin.confluence.jobRequestMonitoring"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestMonitoring.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestMonitoring.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestMonitoring.desc.content"/>
+			<dialog-page id="jobRequestOnFailure" template-key="com.itg.plugin.confluence.jobRequestOnFailure"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestOnFailure.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestOnFailure.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestOnFailure.desc.content"/>
+			<dialog-page id="jobRequestSegmentInfo" template-key="com.itg.plugin.confluence.jobRequestSegmentInfo"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestSegmentInfo.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestSegmentInfo.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestSegmentInfo.desc.content"/>
+			<dialog-page id="jobRequestPrepops" template-key="com.itg.plugin.confluence.jobRequestPrepops"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestPrepops.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestPrepops.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestPrepops.desc.content"/>
+			<dialog-page id="jobRequestPurpose" template-key="com.itg.plugin.confluence.jobRequestPurpose"
+						 title-key="com.itg.plugin.confluence.wizard.jobRequestPurpose.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.jobRequestPurpose.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.jobRequestPurpose.desc.content"
+						 last="true"/>
+
+			<!-- deploymentPlan Wizard Path Pages -->
+			<dialog-page id="deploymentPlanProperties" template-key="com.itg.plugin.confluence.deploymentPlanProperties"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanProperties.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanProperties.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanProperties.desc.content"/>
+			<dialog-page id="deploymentPlanSummary" template-key="com.itg.plugin.confluence.deploymentPlanSummary"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanSummary.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanSummary.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanSummary.desc.content"/>
+			<dialog-page id="deploymentPlanBackground" template-key="com.itg.plugin.confluence.deploymentPlanBackground"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanBackground.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanBackground.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanBackground.desc.content"/>
+			<dialog-page id="deploymentPlanObjectives" template-key="com.itg.plugin.confluence.deploymentPlanObjectives"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanObjectives.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanObjectives.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanObjectives.desc.content"/>
+			<dialog-page id="deploymentPlanRequirements" template-key="com.itg.plugin.confluence.deploymentPlanRequirements"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanRequirements.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanRequirements.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanRequirements.desc.content"/>
+			<dialog-page id="deploymentPlanBenefits" template-key="com.itg.plugin.confluence.deploymentPlanBenefits"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanBenefits.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanBenefits.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanBenefits.desc.content"/>
+			<dialog-page id="deploymentPlanScope" template-key="com.itg.plugin.confluence.deploymentPlanScope"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanScope.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanScope.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanScope.desc.content"/>
+			<dialog-page id="deploymentPlanTimeframe" template-key="com.itg.plugin.confluence.deploymentPlanTimeframe"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanTimeframe.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanTimeframe.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanTimeframe.desc.content"/>
+			<dialog-page id="deploymentPlanRisks" template-key="com.itg.plugin.confluence.deploymentPlanRisks"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanRisks.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanRisks.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanRisks.desc.content"/>
+			<dialog-page id="deploymentPlanConstraints" template-key="com.itg.plugin.confluence.deploymentPlanConstraints"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanConstraints.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanConstraints.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanConstraints.desc.content"/>
+			<dialog-page id="deploymentPlanStakeholders" template-key="com.itg.plugin.confluence.deploymentPlanStakeholders"
+						 title-key="com.itg.plugin.confluence.wizard.deploymentPlanStakeholders.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.deploymentPlanStakeholders.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.deploymentPlanStakeholders.desc.content"
+						 last="true"/>
+
+			<!-- testPlan Wizard Path Pages -->
+			<dialog-page id="testPlanProperties" template-key="com.itg.plugin.confluence.testPlanProperties"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanProperties.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanProperties.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanProperties.desc.content"/>
+			<dialog-page id="testPlanSummary" template-key="com.itg.plugin.confluence.testPlanSummary"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanSummary.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanSummary.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanSummary.desc.content"/>
+			<dialog-page id="testPlanBackground" template-key="com.itg.plugin.confluence.testPlanBackground"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanBackground.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanBackground.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanBackground.desc.content"/>
+			<dialog-page id="testPlanObjectives" template-key="com.itg.plugin.confluence.testPlanObjectives"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanObjectives.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanObjectives.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanObjectives.desc.content"/>
+			<dialog-page id="testPlanRequirements" template-key="com.itg.plugin.confluence.testPlanRequirements"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanRequirements.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanRequirements.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanRequirements.desc.content"/>
+			<dialog-page id="testPlanBenefits" template-key="com.itg.plugin.confluence.testPlanBenefits"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanBenefits.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanBenefits.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanBenefits.desc.content"/>
+			<dialog-page id="testPlanScope" template-key="com.itg.plugin.confluence.testPlanScope"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanScope.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanScope.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanScope.desc.content"/>
+			<dialog-page id="testPlanTimeframe" template-key="com.itg.plugin.confluence.testPlanTimeframe"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanTimeframe.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanTimeframe.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanTimeframe.desc.content"/>
+			<dialog-page id="testPlanRisks" template-key="com.itg.plugin.confluence.testPlanRisks"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanRisks.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanRisks.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanRisks.desc.content"/>
+			<dialog-page id="testPlanConstraints" template-key="com.itg.plugin.confluence.testPlanConstraints"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanConstraints.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanConstraints.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanConstraints.desc.content"/>
+			<dialog-page id="testPlanStakeholders" template-key="com.itg.plugin.confluence.testPlanStakeholders"
+						 title-key="com.itg.plugin.confluence.wizard.testPlanStakeholders.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.testPlanStakeholders.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.testPlanStakeholders.desc.content"
+						 last="true"/>
+
+			<!-- socialmedia_brief Wizard Path Pages -->
+			<dialog-page id="socialMediaBriefProperties" template-key="com.itg.plugin.confluence.socialMediaBriefProperties"
+						 title-key="com.itg.plugin.confluence.wizard.socialMediaBriefProperties.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.socialMediaBriefProperties.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.socialMediaBriefProperties.desc.content"/>
+			<dialog-page id="socialMediaPageSetup" template-key="com.itg.plugin.confluence.socialMediaPageSetup"
+						 title-key="com.itg.plugin.confluence.wizard.socialMediaPageSetup.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.socialMediaPageSetup.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.socialMediaPageSetup.desc.content"/>
+			<dialog-page id="socialMediaContent1" template-key="com.itg.plugin.confluence.socialMediaContent1"
+						 title-key="com.itg.plugin.confluence.wizard.socialMediaContent.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.socialMediaContent.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.socialMediaContent.desc.content"/>
+			<dialog-page id="socialMediaContent2" template-key="com.itg.plugin.confluence.socialMediaContent2"
+						 title-key="com.itg.plugin.confluence.wizard.socialMediaContent.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.socialMediaContent.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.socialMediaContent.desc.content"/>
+			<dialog-page id="socialMediaSetupAndBudget" template-key="com.itg.plugin.confluence.socialMediaSetupAndBudget"
+						 title-key="com.itg.plugin.confluence.wizard.socialMediaSetupAndBudget.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.socialMediaSetupAndBudget.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.socialMediaSetupAndBudget.desc.content"/>
+			<dialog-page id="commonPagesAdditionalInfo" template-key="com.itg.plugin.confluence.commonPagesAdditionalInfo"
+						 title-key="com.itg.plugin.confluence.wizard.commonPagesAdditionalInfo.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.commonPagesAdditionalInfo.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.commonPagesAdditionalInfo.desc.content"/>
+			<dialog-page id="commonPagesCopywriting" template-key="com.itg.plugin.confluence.commonPagesCopywriting"
+						 title-key="com.itg.plugin.confluence.wizard.commonPagesCopywriting.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.commonPagesCopywriting.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.commonPagesCopywriting.desc.content"/>
+			<dialog-page id="commonPagesCreativeKBO" template-key="com.itg.plugin.confluence.commonPagesCreativeKBO"
+						 title-key="com.itg.plugin.confluence.wizard.commonPagesCreativeKBO.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.commonPagesCreativeKBO.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.commonPagesCreativeKBO.desc.content"/>
+			<dialog-page id="commonPagesCreativeAudience" template-key="com.itg.plugin.confluence.commonPagesCreativeAudience"
+						 title-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAudience.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAudience.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAudience.desc.content"/>
+			<dialog-page id="commonPagesCreativeCommsObj" template-key="com.itg.plugin.confluence.commonPagesCreativeCommsObj"
+						 title-key="com.itg.plugin.confluence.wizard.commonPagesCreativeCommsObj.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.commonPagesCreativeCommsObj.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.commonPagesCreativeCommsObj.desc.content"/>
+			<dialog-page id="commonPagesCreativeAdapt" template-key="com.itg.plugin.confluence.commonPagesCreativeAdapt"
+						 title-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAdapt.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAdapt.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAdapt.desc.content"/>
+			<dialog-page id="commonPagesCreativeAssets" template-key="com.itg.plugin.confluence.commonPagesCreativeAssets"
+						 title-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAssets.title"
+						 description-header-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAssets.desc.header"
+						 description-content-key="com.itg.plugin.confluence.wizard.commonPagesCreativeAssets.desc.content"
+						 last="true"/>
+		</dialog-wizard>
+	</blueprint>
+
+	<!-- Template for Brief -->
+	<content-template key="itg-brief-template" i18n-name-key="itg-brief-template" template-title-key="itg.blueprint.brief.title">
+		<description key="itg-brief-template.description" i18n-name-key="itg-brief-template.description" />
+		<resource name="template" type="download" location="templates/london/itg_brief.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Template for Release Note -->
+	<content-template key="itg-release note-template" i18n-name-key="itg-release-note-template" template-title-key="itg.blueprint.release-note.title">
+		<description key="itg-release note-template.description" i18n-name-key="itg-release note-template.description" />
+		<resource name="template" type="download" location="templates/london/itg_release_note.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Template for Change Request -->
+	<content-template key="itg-change request-template" i18n-name-key="itg-change-request-template" template-title-key="itg.blueprint.change-request.title">
+		<description key="itg-change request-template.description" i18n-name-key="itg-change request-template.description" />
+		<resource name="template" type="download" location="templates/london/itg_change_request.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Template for Dba Change Request -->
+	<content-template key="itg-dba change request-template" i18n-name-key="itg-dba-change-request-template" template-title-key="itg.blueprint.change-request.title">
+		<description key="itg-dba change request-template.description" i18n-name-key="itg-dba change request-template.description" />
+		<resource name="template" type="download" location="templates/london/itg_dba_change_request.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Template for Deployment Plan -->
+	<content-template key="itg-deployment plan-template" i18n-name-key="itg-deployment-plan-template" template-title-key="itg.blueprint.deployment-plan.title">
+		<description key="itg-deployment plan-template.description" i18n-name-key="itg-deployment plan-template.description" />
+		<resource name="template" type="download" location="templates/london/itg_deployment_plan.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Template for Job Request -->
+	<content-template key="itg-job request-template" i18n-name-key="itg-job-request-template" template-title-key="itg.blueprint.job-request.title">
+		<description key="itg-job request-template.description" i18n-name-key="itg-job request-template.description" />
+		<resource name="template" type="download" location="templates/london/itg_job_request.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.JobRequestContextProvider" />
+	</content-template>
+
+
+	<!-- Template for Social Media Brief -->
+	<content-template key="itg-social media brief-template" i18n-name-key="itg-digital-social-media-brief-template" template-title-key="itg-digital-social-media-brief-template.title">
+		<description key="itg-digital-social-media-brief-template.description" i18n-name-key="itg-digital-social-media-brief-template.description" />
+		<resource name="template" type="download" location="templates/digital/itg_digital_socialmedia_brief.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.SocialMediaContextProvider" />
+	</content-template>
+
+	<!-- Template for Email Brief -->
+	<content-template key="itg-email brief-template" i18n-name-key="itg-digital-email-brief-template" template-title-key="itg-digital-email-brief-template.title">
+		<description key="itg-digital email brief-template.description" />
+		<resource name="template" type="download" location="templates/digital/itg_digital_email_brief.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Template for Creative Brief -->
+	<content-template key="itg-creative brief-template" i18n-name-key="itg-digital-creative-brief-template" template-title-key="itg-digital-creative-brief-template.title">
+		<description key="itg-digital-creative-brief-template.description" i18n-name-key="itg-digital-creative-brief-template.description" />
+		<resource name="template" type="download" location="templates/digital/itg_digital_creative_brief.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Template for Content Brief -->
+	<content-template key="itg-content brief-template" i18n-name-key="itg-digital-content-brief-template" template-title-key="itg-digital-content-brief-template.title">
+		<description key="itg-digital-content-brief-template.description" i18n-name-key="itg-digital-content-brief-template.description" />
+		<resource name="template" type="download" location="templates/digital/itg_digital_content_brief.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Template for Landing Page Brief -->
+	<content-template key="itg-landing page / website brief-template" i18n-name-key="itg-digital-landingpage-brief-template" template-title-key="itg-digital-landingpage-brief-template.title">
+		<description key="itg-digital-landingpage-brief-template.description" />
+		<resource name="template" type="download" location="templates/digital/itg_digital_landingpage_brief.xml" />
+		<context-provider class="com.itg.plugins.confluence.implementation.context.DefaultContextProvider" />
+	</content-template>
+
+	<!-- Plugin Servlet details -->
+	<servlet key="document-blueprint-admin" i18n-name-key="document-blueprint-admin" class="com.itg.plugins.confluence.api.AdminServlet">
+		<url-pattern>/dba</url-pattern>
+	</servlet>
+
+	<!-- Plugin Rest Service details -->
+	<rest i18n-name-key="itg-rest-data-service" key="itg-rest-data-service" path="dbds" version="1.0">
+		<description key="itg-rest-data-service.description" i18n-name-key="itg-rest-data-service.description" />
+	</rest>
+
+</atlassian-plugin>

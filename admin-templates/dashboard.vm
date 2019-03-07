@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<meta name="decorator" content="atl.admin">
+		<title>ITG London Plugin Configuration</title>
+		#requireResourcesForContext("com.itg.confluence.plugins.document-blueprints:document-blueprints-resources-admin")
+		#requireResourcesForContext("com.itg.confluence.plugins.document-blueprints:atl.admin")
+	</head>
+	<body>
+	    <input type="text" id="departmentJson" />
+	    <input type="text" id="projectJson" />
+	    <input type="text" id="spaceJson" />
+
+        <div id="message-area-wrapper" style="height:100px;">
+            <div id="message-area" class="aui">
+            </div>
+        </div>
+        <div class="aui-tabs horizontal-tabs ">
+            <ul class="tabs-menu">
+                <li class="menu-item active-tab">
+                    <a href="#departmentConfig">Department Configuration</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#templateConfig">Template Configuration</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#clientConfig">Client Configuration</a>
+                </li>
+            </ul>
+            <div class="tabs-pane active-pane" id="departmentConfig">
+                <div class="aui">
+                    <h2>Department Configuration</h2>
+                    <table id="blueprint-department-config" name="blueprint-department-config" class="aui"></table>
+                </div>
+            </div>
+            <div class="tabs-pane" id="templateConfig">
+                <div class="aui">
+                    <h2>Template Configuration</h2>
+                    <table id="blueprint-template-config" name="blueprint-template-config" class="aui"></table>
+                </div>
+            </div>
+            <div class="tabs-pane" id="clientConfig">
+                <div class="aui">
+                    <h2>Client Configuration</h2>
+                    <table id="blueprint-client-config" name="blueprint-client-config" class="aui"></table>
+                </div>
+            </div>
+        </div>
+	</body>
+</html>

@@ -1,0 +1,110 @@
+{namespace com.itg.plugin.confluence}
+/**
+*	Sets the properties of the brief
+*/
+{template .contentBriefProperties}
+    <form id="frm" action="#" method="post" class="aui">
+		{call .labelSelectPairSocialOptions}
+			{param strName}varPlatform{/param}
+			{param strId}varPlatform{/param}
+			{param strLabel}{getText('com.itg.plugin.confluence.socialMediaBriefProperties.form.varPlatform.label')}{/param}
+		{/call}
+      	{call .labelInputPair}
+      		{param strName}varTitle{/param}
+      		{param strId}varTitle{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.contentBriefProperties.form.varTitle.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.contentBriefProperties.form.varTitle.required')}{/param}
+      	{/call}
+		{call .labelInputPair}
+			{param strName}varImplementationDate{/param}
+			{param strId}varImplementationDate{/param}
+			{param type}date{/param}
+			{param strLabel}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varImplementationDate.label')}{/param}
+			{param strRequiredText}{getText('com.itg.plugin.confluence.jobRequestProperties.form.varImplementationDate.required')}{/param}
+		{/call}
+      	{call .labelInputPair}
+      		{param strName}varBudget{/param}
+      		{param strId}varBudget{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.contentBriefProperties.form.varBudget.label')}{/param}
+      		{param strHelpText}{getText('com.itg.plugin.confluence.contentBriefProperties.form.varBudget.helptext')}{/param}
+      	{/call}
+    </form>
+{/template}
+/**
+*	Enter details of the page setup
+*/
+{template .contentPageSetup}
+	{call .labelSelectPairBoolean}
+		{param strName}swiBusinessPage{/param}
+		{param strId}swiBusinessPage{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentPageSetup.form.swiBusinessPage.label')}{/param}
+	{/call}
+{/template}
+/**
+*	Details of the content
+*/
+{template .contentContent}
+	{call .labelInputPair}
+		{param strName}varKPIs{/param}
+		{param strId}varKPIs{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.varKPIs.label')}{/param}
+		{param strHelpText}{getText('com.itg.plugin.confluence.contentContent.form.varKPIs.helptext')}{/param}
+	{/call}
+	{call .labelInputPair}
+		{param strName}varCampaignStartDate{/param}
+		{param strId}varCampaignStartDate{/param}
+		{param type}date{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.varCampaignStartDate.label')}{/param}
+		{param strHelpText}{getText('com.itg.plugin.confluence.contentContent.form.varCampaignStartDate.helptext')}{/param}
+	{/call}
+	{call .labelInputPair}
+		{param strName}varCampaignEndDate{/param}
+		{param strId}varCampaignEndDate{/param}
+		{param type}date{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.varCampaignEndDate.label')}{/param}
+		{param strHelpText}{getText('com.itg.plugin.confluence.contentContent.form.varCampaignEndDate.helptext')}{/param}
+	{/call}
+	{call .labelSelectPairBoolean}
+		{param strName}varAssetsSupplied{/param}
+		{param strId}varAssetsSupplied{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.varAssetsSupplied.label')}{/param}
+	{/call}
+	{call .labelSelectPairBoolean}
+		{param strName}swiContentRequired{/param}
+		{param strId}swiContentRequired{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.swiContentRequired.label')}{/param}
+	{/call}
+	{call .labelSelectPairBoolean}
+		{param strName}swiCopywritingRequired{/param}
+		{param strId}swiCopywritingRequired{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.swiCopywritingRequired.label')}{/param}
+	{/call}
+	{call .labelSelectPairBoolean}
+		{param strName}varContentCalendarRequired{/param}
+		{param strId}varAssetsSupplied{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.varContentCalendarRequired.label')}{/param}
+	{/call}
+	{call .labelInputPair}
+		{param strName}varNumberOfPosts{/param}
+		{param strId}varNumberOfPosts{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.varNumberOfPosts.label')}{/param}
+		{param strHelpText}{getText('com.itg.plugin.confluence.contentContent.form.varNumberOfPosts.helptext')}{/param}
+	{/call}
+	{call .labelInputPair}
+		{param strName}varTimingsForPosts{/param}
+		{param strId}varTimingsForPosts{/param}
+		{param strLabel}{getText('com.itg.plugin.confluence.contentContent.form.varTimingsForPosts.label')}{/param}
+		{param strHelpText}{getText('com.itg.plugin.confluence.contentContent.form.varTimingsForPosts.helptext')}{/param}
+	{/call}
+{/template}
+/**
+*	setup and budget constraints
+*/
+{template .contentSetupAndBudget}
+	{call .wikiForm}
+  		{param strName}wikiObjectives{/param}
+  		{param strId}wiki-markup-Objectives{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.contentBriefObjectives.form.wiki-markup-Objectives.label')}{/param}
+      	{param strHelpText}{getText('com.itg.plugin.confluence.contentBriefObjectives.form.wiki-markup-Objectives.helptext')}{/param}
+  	{/call}
+{/template}

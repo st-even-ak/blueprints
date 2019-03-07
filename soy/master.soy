@@ -1,0 +1,198 @@
+{namespace com.itg.plugin.confluence}
+/**
+*	Renders a Label / Input pair
+*/
+{template .labelInputPair}
+	{@param strName: string}			/** name the object - this is the value referenced by the listener **/
+	{@param strId: string}				/** id of the object - this is the internal reference **/
+	{@param strLabel: string}			/** user friendly labels **/
+    {@param? type: string}              /** what type of input to render (html5) **/
+	{@param? strHelpText: string}		/** give the user some guidance **/
+	{@param? strRequiredText: string}	/** the text to return on err **/
+	{@param? strDefaultText: string}	/** for user optional fields value to inject on submit if empty, this is for the listener to watch for **/
+	<div class="field-group">
+        <label for="{$strId}">{$strLabel}</label>
+        <input id="{$strId}" name="{$strName}" class="text" data-aui-notification-field{sp}
+            {if isNonnull($type)}
+                type="{$type}" {sp}
+                {if $type=='date'}
+                    data-date-format="YYYY-MM-DD"{sp}
+                {/if}
+            {else}
+                type="text" {sp}
+            {/if}
+        	{if isNonnull($strRequiredText)}
+        		placeholder="required"{sp}
+        		required{sp}
+        		data-aui-notification-error="{$strRequiredText}"{sp}
+        	{else}
+        		{if isNonnull($strDefaultText)}
+					placeholder="{$strDefaultText}"{sp}
+				{/if}
+        	{/if}
+        	{if isNonnull($strHelpText)}
+	        	data-aui-notification-when = "focus"{sp}
+		        data-aui-notification-info = "{$strHelpText}"{sp}
+        	{/if} />
+			{if isNonnull($strDefaultText)}
+				<input id="{$strId}-default" type="hidden" value="{$strDefaultText}" />
+			{/if}
+    </div>
+{/template}
+/**
+*	Renders a wiki content form
+*/
+{template .wikiForm}
+	{@param strName: string}			/** name the object - this is the value referenced by the listener **/
+	{@param strId: string}				/** id of the object - this is the internal reference **/
+	{@param strLabel: string}			/** user friendly labels **/
+	{@param? strRequiredText: string}	/** the text to return on err **/
+	{@param? strDefaultText: string}	/** for user optional fields value to inject on submit if empty, this can also be used set values for the listener to watch for **/
+	{@param? strHelpText: string}		/** give the user some guidance **/
+    {@param? optNoWrap: string}         /** if param value present do not add form tag **/
+    {if not $optNoWrap}
+        <form id="frm" action="#" method="post" class="aui">
+    {/if}
+    <div class="field-group">
+        <label for="{$strId}">{$strLabel}</label>
+        <textarea id="{$strId}" name="{$strName}" class="textarea itg" {sp}
+            {if isNonnull($strRequiredText)}
+                placeholder="required"{sp}
+                required{sp}
+                data-aui-notification-error="{$strRequiredText}"{sp}
+            {else}
+                {if isNonnull($strDefaultText)}
+                    placeholder="{$strDefaultText}"{sp}
+                {/if}
+            {/if}
+            {if isNonnull($strHelpText)}
+                data-aui-notification-info = "{$strHelpText}"{sp}
+            {/if}>
+        </textarea>
+        {if isNonnull($strDefaultText)}
+            <input id="{$strId}-default" type="hidden" value="{$strDefaultText}" />
+        {/if}
+    </div>
+    {if not $optNoWrap}
+        </form>
+    {/if}
+	{if isNonnull($strDefaultText)}
+	    <script type="javascript">
+	    	$("#{$strId}").attr("defaultValue", {$strDefaultText});
+	    </script>
+	{/if}
+{/template}
+/**
+* Renders a label select pair
+**/
+{template .labelSelectPair}
+	{@param strId: string}		/** id of the object - this is the internal reference **/
+	{@param strName: string}	/** name the object - this is the value referenced by the listener **/
+	{@param strLabel: string}	/** user friendly labels **/
+	{@param kvps: list<[key:string,value:string]>}			/** collection of key value pairs to the options list **/
+	<div class="field-group">
+		<label for="{$strId}">{$strLabel}</label>
+	    <select id="{$strId}" class="select" name="{$strName}">
+		    {foreach $kvp in $kvps}
+		    	<option value="{$kvp.key}">{$kvp.value}</option>
+			{/foreach}
+		</select>
+	</div>
+{/template}
+/**
+ * Renders a boolean select pair
+**/
+{template .labelSelectPairBoolean}
+	{@param strId: string}		/** id of the object - this is the internal reference **/
+	{@param strName: string}	/** name the object - this is the value referenced by the listener **/
+	{@param strLabel: string}	/** user friendly labels **/
+	{@param? strHelpText: string}		/** give the user some guidance **/
+	<div class="field-group">
+		<label for="{$strId}">{$strLabel}</label>
+		<select id="{$strId}" class="select" name="{$strName}"
+				{if isNonnull($strHelpText)}
+				data-aui-notification-when = "focus,click"{sp}
+				data-aui-notification-info = "{$strHelpText}"{sp}
+				{/if}>
+			<option value="-1">Select one</option>
+			<option value="y">Yes</option>
+			<option value="n">No</option>
+		</select>
+	</div>
+{/template}
+/**
+ * ITG Digital - Renders a SM option list select pair
+**/
+{template .labelSelectPairSocialOptions}
+	{@param strId: string}		/** id of the object - this is the internal reference **/
+	{@param strName: string}	/** name the object - this is the value referenced by the listener **/
+	{@param strLabel: string}	/** user friendly labels **/
+	{@param? strHelpText: string}		/** give the user some guidance **/
+	<div class="field-group">
+		<label for="{$strId}">{$strLabel}</label>
+		<select id="{$strId}" class="select" name="{$strName}"
+				{if isNonnull($strHelpText)}
+				data-aui-notification-when = "focus,click"{sp}
+				data-aui-notification-info = "{$strHelpText}"{sp}
+				{/if}>
+			<option value="-1">Select one</option>
+			<option value="fb">Facebook</option>
+			<option value="li">LinkedIn</option>
+		</select>
+	</div>
+{/template}
+/**
+*	Template creation first page
+*	Choose a template to complete
+*/
+{template .templateSelectionForm}
+    <div id="spinner-wrapper" class="itg-spinner-wrapper">
+        <div id="spinner" class="itg-spinner"></div>
+    </div>
+	<form id="frm" action="#" method="post" class="aui">
+		<div class="field-group">
+			<label for="template-key">{getText('com.itg.plugin.confluence.templateSelectionForm.form.department.label')}</label>
+		    <select id="department" class="select" name="department">
+                <option value="-1">{getText('com.itg.plugin.confluence.templateSelectionForm.form.department.label')}</option>
+		    	<!-- option list provided using populatePropertiesForm func in document-blueprints.js -->
+		    </select>
+		</div>
+		<div class="field-group">
+			<label for="template-key">{getText('com.itg.plugin.confluence.templateSelectionForm.form.template-key.label')}</label>
+		    <select id="template-key" class="select" name="contentTemplateKey">
+                <option value="-1">{getText('com.itg.plugin.confluence.templateSelectionForm.form.template-key.label')}</option>
+		    	<!-- option list provided using populatePropertiesForm func in document-blueprints.js -->
+		    </select>
+		</div>
+		<div class="field-group">
+            <span style="float:right; z-index;-10;"><input type="checkbox" id="filter-clients" /><span></span>Show All</span>
+		    <label for="clientkey">{getText('com.itg.plugin.confluence.templateSelectionForm.form.client.label')}</label>
+		    <select id="clientkey" class="select" name="clientkey">
+                <option value="-1">{getText('com.itg.plugin.confluence.templateSelectionForm.form.client.label')}</option>
+		    	<!-- option list provide using populatePropertiesForm func in document-blueprints.js -->
+		    </select>
+		</div>
+		<div class="field-group">
+		    <label for="varDocumentStatus">{getText('com.itg.plugin.confluence.templateSelectionForm.form.documentstatus.label')}</label>
+		    <select id="varDocumentStatus" class="select" name="macro-status">
+                <option value="-1">{getText('com.itg.plugin.confluence.templateSelectionForm.form.documentstatus.label')}</option>
+		        <option value="confidential">Confidential</option>
+		        <option value="internal">Internal</option>
+		        <option value="public">Public</option>
+		    </select>
+		</div>
+      	{call .labelInputPair}
+      		{param strName}varLabels{/param}
+      		{param strId}varLabels{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.templateSelectionForm.form.varLabels.label')}{/param}
+      		{param strHelpText}{getText('com.itg.plugin.confluence.templateSelectionForm.form.varLabels.helptext')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}macro-jira{/param}
+      		{param strId}varJIRA{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.templateSelectionForm.form.varJIRA.label')}{/param}
+      		{param strHelpText}{getText('com.itg.plugin.confluence.templateSelectionForm.form.varJIRA.helptext')}{/param}
+      	{/call}
+        <input id="session-key" name="sessionKey" type="hidden" value="" />
+	</form>
+{/template}

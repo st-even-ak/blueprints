@@ -1,0 +1,93 @@
+.itg{
+    height: 240px !important;
+    max-width: 340px !important;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+/** widen the labels **/
+form.aui .field-group > aui-label {
+    float: left;
+    margin-left: -145px;
+    padding: 5px 0 0 0;
+    position: relative;
+    text-align: right;
+    width: 150px;
+    word-wrap: break-word;
+}
+
+/** pad the header on the form **/
+form.aui > h4{
+    padding:5px;
+}
+
+#create-dialog .dialog-panel-body {
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.itg-spinner-wrapper{
+    position: absolute;
+    background-color: black;
+    opacity: 0.5;
+    height: 76%;
+    width: 100%;
+    margin:-20px;
+    z-index:100;
+}
+
+.itg-spinner {
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    height:60px;
+    width:60px;
+    margin:0px auto;
+    z-index:101;
+    -webkit-animation: rotation .6s infinite linear;
+    -moz-animation: rotation .6s infinite linear;
+    -o-animation: rotation .6s infinite linear;
+    animation: rotation .6s infinite linear;
+    border-left:6px solid rgba(0,174,239,.15);
+    border-right:6px solid rgba(0,174,239,.15);
+    border-bottom:6px solid rgba(0,174,239,.15);
+    border-top:6px solid rgba(0,174,239,.8);
+    border-radius:100%;
+}
+
+.itg-spinner-fail {
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    height:60px;
+    width:60px;
+    margin:0px auto;
+    z-index:101;
+    -webkit-animation: rotation .6s infinite linear;
+    -moz-animation: rotation .6s infinite linear;
+    -o-animation: rotation .6s infinite linear;
+    animation: rotation .6s infinite linear;
+    border-left:6px solid rgba(255,255,255,.15);
+    border-right:6px solid rgba(255,255,255,.15);
+    border-bottom:6px solid rgba(255,255,255,.15);
+    border-top:6px solid rgba(255,255,255,.8);
+    border-radius:100%;
+}
+
+@-webkit-keyframes rotation {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(359deg);}
+}
+@-moz-keyframes rotation {
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(359deg);}
+}
+@-o-keyframes rotation {
+    from {-o-transform: rotate(0deg);}
+    to {-o-transform: rotate(359deg);}
+}
+@keyframes rotation {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(359deg);}
+}

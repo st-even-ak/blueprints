@@ -1,0 +1,114 @@
+{namespace com.itg.plugin.confluence}
+/**
+ *  Deployment plan
+*/
+{template .deploymentPlanProperties}
+	<form action="#" id="deploymentPlanProperties" method="post" class="aui">
+      	{call .labelInputPair}
+      		{param strName}varTitle{/param}
+      		{param strId}varTitle{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteTitle.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteTitle.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varProposer{/param}
+      		{param strId}varProposer{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteProposer.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteProposer.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varAuthoriser{/param}
+      		{param strId}varAuthoriser{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteAuthoriser.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteAuthoriser.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}macro-jira{/param}
+      		{param strId}varJIRA{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteJira.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteJira.required')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varServerDetails{/param}
+      		{param strId}varServerDetails{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteServerDetails.label')}{/param}
+      		{param strRequiredText}{getText('com.itg.plugin.confluence.deploymentPlanProperties.form.varReleaseNoteServerDetails.required')}{/param}
+      	{/call}
+	</form>
+{/template}
+/**
+*	Summary
+*/
+{template .deploymentPlanSummary}
+	{call .wikiForm}
+  		{param strName}wikiReleaseNoteSummary{/param}
+  		{param strId}wiki-markup-deploymentPlanSummary{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanSummary.form.wiki-markup-deploymentPlanSummary.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.deploymentPlanSummary.form.wiki-markup-deploymentPlanSummary.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Method Statement
+**/
+{template .deploymentPlanMethodStatement}
+	{call .wikiForm}
+  		{param strName}wikiReleaseNoteMethodStatement{/param}
+  		{param strId}wiki-markup-deploymentPlanMethodStatement{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanMethodStatement.form.wiki-markup-deploymentPlanMethodStatement.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.deploymentPlanMethodStatement.form.wiki-markup-deploymentPlanMethodStatement.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Authority
+**/
+{template .deploymentPlanRisks}
+	{call .wikiForm}
+  		{param strName}wikiReleaseNoteRisks{/param}
+  		{param strId}wiki-markup-deploymentPlanRisks{/param}
+  		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanRisks.form.wiki-markup-deploymentPlanRisks.label')}{/param}
+      	{param strRequiredText}{getText('com.itg.plugin.confluence.deploymentPlanRisks.form.wiki-markup-deploymentPlanRisks.required')}{/param}
+  	{/call}
+{/template}
+/**
+*	Authority
+**/
+{template .deploymentPlanAuthority}
+    <form id="wiki-markup-form" action="#" method="post" class="aui">
+      <fieldset>
+      	{call .labelInputPair}
+      		{param strName}varClientApprover{/param}
+      		{param strId}varClientApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanAuthority.form.varReleaseNoteClientApprover.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varTechApprover{/param}
+      		{param strId}varTechApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanAuthority.form.varReleaseNoteTechApprover.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varSolutionApprover{/param}
+      		{param strId}varSolutionApprover{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanAuthority.form.varReleaseNoteSolutionApprover.label')}{/param}
+      	{/call}
+      </fieldset>
+    </form>
+{/template}
+/**
+*	Timeframe
+**/
+{template .deploymentPlanTimeframe}
+    <form id="wiki-markup-form" action="#" method="post" class="aui">
+      <fieldset>
+      	{call .labelInputPair}
+      		{param strName}varTimescale{/param}
+      		{param strId}varTimescale{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanTimeframe.form.varTimescale.label')}{/param}
+      	{/call}
+      	{call .labelInputPair}
+      		{param strName}varReleaseWindow{/param}
+      		{param strId}varReleaseWindow{/param}
+      		{param strLabel}{getText('com.itg.plugin.confluence.deploymentPlanTimeframe.form.varReleaseWindow.label')}{/param}
+      	{/call}
+      </fieldset>
+    </form>
+{/template}
